@@ -3,13 +3,13 @@
 function install_dotnet() {
   local BUILD_DIR="$1"
   local CACHE_DIR="$2"
-  local ZIP_NAME="dotnet-2.1.4.tar.gz"
+  local ZIP_NAME="dotnet-2.1.200.tar.gz"
 
   if [ ! -f $CACHE_DIR/$ZIP_NAME ]; then
     # https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.5.md
-    curl -sSL -o $CACHE_DIR/$ZIP_NAME https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-linux-x64.tar.gz
+    curl -sSL -o $CACHE_DIR/$ZIP_NAME https://download.microsoft.com/download/3/7/1/37189942-C91D-46E9-907B-CF2B2DE584C7/dotnet-sdk-2.1.200-linux-x64.tar.gz
   else
-    echo "$ZIP_NAME from cache folder"
+    echo "$ZIP_NAME found in cache folder"
   fi
 
   mkdir -p ${BUILD_DIR}/.heroku/dotnet && tar zxf $CACHE_DIR/$ZIP_NAME -C ${BUILD_DIR}/.heroku/dotnet
@@ -30,7 +30,7 @@ function indent() {
 }
 
 function apt_install(){
-  echo "Install package"
+  echo "Installing packages"
 
   local apt_cache_dir="$CACHE_DIR/apt/cache"
   local apt_state_dir="$CACHE_DIR/apt/state"
@@ -72,7 +72,7 @@ function apt_install(){
   export CPATH="${INCLUDE_PATH-}"
   export CPPPATH="${INCLUDE_PATH-}"
   export PKG_CONFIG_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/pkgconfig:${PKG_CONFIG_PATH-}"
-  echo "APT packages Installled"
+  echo "Packages installed"
 }
 
 export_env_dir() {
