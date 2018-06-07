@@ -32,6 +32,7 @@ echo "Installing dependencies"
 apt_install libunwind8 gettext libxss1 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxi6 libxtst6 libnss3 libgconf-2-4 libxrandr2 libasound2 libatk1.0-0 libgtk2.0-0 libgtk-3-0 libxinerama1 libcairo-gobject2 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 echo "Creating Google Chrome shims"
+BIN=chrome/chrome
 SHIM=google-chrome-stable
 BIN_DIR=$BUILD_DIR/.apt/usr/bin
 
