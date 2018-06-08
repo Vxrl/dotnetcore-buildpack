@@ -31,27 +31,6 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=${DOTNET_CLI_TELEMETRY_OPTOUT:-1}
 echo "Installing dependencies"
 apt_install libunwind8 gettext
 
-echo "Installing Google Chrome"
-apt_install libxss1 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxi6 libxtst6 libnss3 libgconf-2-4 libxrandr2 libasound2 libatk1.0-0 libgtk2.0-0 libgtk-3-0 libxinerama1 libcairo-gobject2 https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-echo "Creating Google Chrome shims"
-CHROME_BIN_NAME=chrome/chrome
-CHROME_SHIM_NAME=google-chrome-stable
-BIN_DIR=$BUILD_DIR/.apt/usr/bin
-
-rm $BIN_DIR/$CHROME_SHIM_NAME
-cat <<EOF >$BIN_DIR/$CHROME_SHIM_NAME
-#!/usr/bin/env bash
-exec \$HOME/.apt/opt/google/$CHROME_BIN_NAME --headless --no-sandbox --disable-gpu --remote-debugging-port=9222 \$@
-EOF
-chmod +x $BIN_DIR/$CHROME_SHIM_NAME
-cp $BIN_DIR/$CHROME_SHIM_NAME $BIN_DIR/google-chrome
-
-cat <<EOF >$BUILD_DIR/.profile.d/010_google-chrome.sh
-export GOOGLE_CHROME_BIN="\$HOME/.apt/opt/google/$CHROME_BIN_NAME"
-export GOOGLE_CHROME_SHIM="\$HOME/.apt/usr/bin/$CHROME_SHIM_NAME"
-EOF
-
 echo "Installing .NET Core SDK"
 install_dotnet $BUILD_DIR $CACHE_DIR
 
